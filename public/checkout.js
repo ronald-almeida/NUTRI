@@ -134,7 +134,11 @@ async function generatePix() {
   showView('payment-loading');
   saveSession({ state: 'attempting' });
   try {
-    const result = await api('/api/pix', { method: 'POST', body: JSON.stringify(request) });
+    const result = await api('/api/pix', {
+      method: 'POST',
+      headers: { 'Idempotency-Key': request.idempotencyKey },
+      body: JSON.stringify({ customer: request.customer }),
+    });
     if (result.amount !== 28700 || !result.token || typeof result.copyPaste !== 'string' || !result.copyPaste || typeof result.qrCodeDataUrl !== 'string' || !result.qrCodeDataUrl.startsWith('data:image/png;base64,')) {
       throw new Error('Não foi possível validar o código Pix. Tente novamente em alguns instantes.');
     }
@@ -158,9 +162,11 @@ form.addEventListener('submit', (event) => {
   $('form-error').hidden = true;
   try {
     const customer = validateCustomer(Object.fromEntries(new FormData(form)));
-    // Firebot does not document idempotency. Keep the existing charge and block
-    // retries after ambiguous responses instead of risking a second charge.
-    if (!charge && !generating && !uncertain) request = { customer };
+    // Reuse the same provider idempotency key for retries of the same order.
+    const fingerprint = JSON.stringify(customer);
+    if (!charge && !generating && !uncertain && request?.fingerprint !== fingerprint) {
+      request = { customer, fingerprint, idempotencyKey: crypto.randomUUID() };
+    }
     dialog.showModal();
     if (uncertain) { showError(UNCERTAIN_MESSAGE); $('retry-button').hidden = true; }
     else if (charge) showCharge();
