@@ -8,7 +8,11 @@ export async function POST(request) {
     let customer;
     try { customer = validateCustomer(body?.customer); }
     catch (error) { throw new PaymentError(error.message, 400, true); }
+    const idempotencyKey = request.headers.get('idempotency-key');
+    if (!idempotencyKey || idempotencyKey.length > 100 || !/^[A-Za-z0-9._:-]+$/.test(idempotencyKey)) {
+      throw new PaymentError('Identificador da cobrança inválido. Atualize a página e tente novamente.', 400, true);
+    }
     const storeUrl = process.env.STORE_URL || `${new URL(request.url).origin}/`;
-    return json(await createPayment(customer, storeUrl));
+    return json(await createPayment(customer, storeUrl, fetch, idempotencyKey));
   } catch (error) { return handleError(error); }
 }
