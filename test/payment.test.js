@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createPayment, getPaymentStatus, createReceipt, readReceipt, crc16, validatePixCode } from '../lib/payment.js';
+import { createPayment, getPaymentStatus, createReceipt, readReceipt, crc16, validatePixCode, providerErrorDetails } from '../lib/payment.js';
 import { POST as createHandler } from '../api/pix.js';
 import { POST as statusHandler } from '../api/pix-status.js';
 import { isValidCpf } from '../public/validation.js';
@@ -83,4 +83,10 @@ test('missing key fails closed, without revealing configuration', async () => {
     assert.equal(result.headers.get('cache-control'), 'private, no-store, max-age=0');
     assert.equal((await result.json()).retryable, true);
   } finally { process.env.FIREBOT_API_KEY = original; }
+});
+test('provider diagnostics redact buyer information and credentials', () => {
+  const message = `CPF 529.982.247-25, telefone (11) 99999-9999, ${customer.name}, ${customer.email}, ${process.env.FIREBOT_API_KEY}: gateway indisponível`;
+  const result = providerErrorDetails(JSON.stringify({ error: message }), JSON.stringify({ customer }));
+  for (const value of [...Object.values(customer), process.env.FIREBOT_API_KEY, '529.982.247-25', '(11) 99999-9999']) assert.equal(JSON.stringify(result).includes(value), false);
+  assert.match(result.message, /gateway indisponível/);
 });
