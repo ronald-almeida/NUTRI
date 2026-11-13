@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f1f1ef" />
+    <meta name="description" content="Black Vitalícia | Felipe Almeida. Pagamento único de R$ 287,00 via Pix." />
+    <title>Black Vitalícia | Felipe Almeida</title>
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/styles.css" />
+    <script type="module" src="/checkout.js"></script>
+  </head>
+  <body>
+    <main class="checkout">
+      <section class="product" aria-label="Resumo da compra">
+        <img src="/assets/product.webp" class="product-image" width="72" height="52" alt="Black Vitalícia, Felipe Almeida" />
+        <div class="product-copy">
+          <h1>Black Vitalícia | Felipe Almeida</h1>
+          <p class="old-price">De: <s>R$ 2.497,00</s></p>
+          <p class="price-line">Por: <strong>R$ 287,00</strong></p>
+          <p class="payment-caption">À vista no Pix</p>
+        </div>
+        <button class="details-button" type="button" aria-expanded="false" aria-controls="purchase-details">Detalhes <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg></button>
+      </section>
+      <div id="purchase-details" class="purchase-details" hidden>
+        <div><span>Black Vitalícia | Felipe Almeida</span><span>R$ 287,00</span></div>
+        <div><span>Forma de pagamento</span><span>Pix à vista</span></div>
+        <div class="details-total"><strong>Total hoje</strong><strong>R$ 287,00</strong></div>
+      </div>
+
+      <form id="checkout-form">
+        <fieldset>
+          <legend>Informações pessoais</legend>
+          <div class="input-group">
+            <label class="visually-hidden" for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" placeholder="Email" maxlength="254" required />
+            <div class="phone-field"><span class="country" aria-label="Brasil, código 55"><span aria-hidden="true">🇧🇷</span> +55</span><label class="visually-hidden" for="phone">Telefone com DDD</label><input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="Telefone com DDD" maxlength="16" required /></div>
+            <label class="visually-hidden" for="name">Nome completo</label>
+            <input id="name" name="name" autocomplete="name" placeholder="Nome completo" minlength="3" maxlength="120" required />
+          </div>
+          <p class="field-help">Use o email em que deseja receber as informações da compra.</p>
+        </fieldset>
+
+        <fieldset class="payment-section">
+          <legend>Método de pagamento</legend>
+          <div class="pix-method">
+            <svg class="pix-icon" viewBox="0 0 32 32" aria-hidden="true"><path d="m16 2 7 7-4.5 4.5a3.5 3.5 0 0 1-5 0L9 9Zm14 14-5-5-4.5 4.5a6.4 6.4 0 0 1-9 0L7 11l-5 5 5 5 4.5-4.5a6.4 6.4 0 0 1 9 0L25 21ZM16 30l-7-7 4.5-4.5a3.5 3.5 0 0 1 5 0L23 23Z" /></svg>
+            <div><strong>Pix</strong><span>Pagamento à vista</span></div>
+            <span class="selected-mark" aria-label="Selecionado">✓</span>
+          </div>
+          <p class="pix-help">Ao comprar, você receberá um QR code e um código Pix Copia e Cola.</p>
+        </fieldset>
+
+        <div class="document-field"><label for="document">Documento</label><input id="document" name="document" inputmode="numeric" autocomplete="off" placeholder="CPF" maxlength="14" required /></div>
+        <p id="form-error" class="form-error" role="alert" hidden></p>
+        <div class="total"><span>Total</span><div><strong>R$ 287,00</strong><span>Pagamento único</span></div></div>
+        <button id="buy-button" class="primary-button" type="submit">Comprar por R$ 287,00 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6" /></svg></button>
+        <p class="secure-note"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2" /><path d="M8 10V7a4 4 0 0 1 8 0v3m-4 4v3" /></svg> Seus dados são enviados por conexão segura.</p>
+      </form>
+      <footer><span>Black Vitalícia | Felipe Almeida</span><span>Brasil · BRL</span></footer>
+    </main>
+
+    <dialog id="pix-dialog" aria-labelledby="dialog-title" aria-describedby="dialog-description">
+      <button id="close-dialog" class="close-button" type="button" aria-label="Fechar pagamento"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6" /></svg></button>
+      <div class="dialog-heading"><span class="dialog-eyebrow">PAGAMENTO VIA PIX</span><h2 id="dialog-title">Finalize sua compra</h2><p id="dialog-description">Black Vitalícia | Felipe Almeida</p><p class="dialog-price">R$ 287,00</p></div>
+      <div id="payment-loading" role="status"><div class="qr-loading"><span class="spinner" aria-hidden="true"></span></div><p class="status-copy">Gerando seu Pix…</p></div>
+      <section id="payment-ready" hidden>
+        <div class="qr-container"><img id="qr-image" width="224" height="224" alt="QR code para pagar R$ 287,00 via Pix" /></div>
+        <p id="expiration" class="expiration" hidden></p>
+        <ol class="instructions"><li>Abra o aplicativo do seu banco.</li><li>Escolha <strong>Pix</strong> e escaneie o QR code, ou copie o código abaixo.</li><li>Confira o recebedor e o valor de <strong>R$ 287,00</strong> antes de pagar.</li></ol>
+        <label for="pix-code" class="code-label">Pix Copia e Cola</label><textarea id="pix-code" readonly rows="2" spellcheck="false"></textarea>
+        <button id="copy-button" class="primary-button" type="button">Copiar código Pix</button>
+        <p id="copy-status" class="copy-status" role="status"></p>
+        <p id="payment-status" class="waiting" role="status">Aguardando pagamento</p>
+      </section>
+      <section id="payment-error" class="payment-message" role="alert" hidden><span class="message-icon" aria-hidden="true">!</span><h3>Não foi possível gerar o Pix</h3><p id="payment-error-text"></p><button id="retry-button" class="primary-button" type="button">Tentar novamente</button></section>
+      <section id="payment-confirmed" class="payment-message" role="status" hidden><span class="message-icon success" aria-hidden="true">✓</span><h3>Pagamento confirmado!</h3><p>Seu Pix de R$ 287,00 foi recebido. Guarde o comprovante da sua compra.</p><button id="done-button" class="primary-button" type="button">Concluir</button></section>
+      <p class="dialog-footer">Pagamento único · R$ 287,00</p>
+    </dialog>
+  </body>
+</html>

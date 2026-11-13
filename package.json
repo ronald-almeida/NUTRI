@@ -1,0 +1,17 @@
+{
+  "name": "nutri-checkout",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "24.x"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test",
+    "dev": "node --env-file-if-exists=.env.local scripts/dev.mjs"
+  },
+  "dependencies": {
+    "qrcode": "1.5.4"
+  }
+}
